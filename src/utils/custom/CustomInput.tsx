@@ -35,7 +35,7 @@ const Input = styled.div`
 
 const Label = styled.label<LabelProps>`
   position: absolute;
-  top: -3rem;
+  top: -3.5rem;
   left: 0.5rem;
   color: #5444e0;
 `

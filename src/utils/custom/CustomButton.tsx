@@ -1,10 +1,10 @@
 import styled, { css } from 'styled-components'
 
-interface Props {
+interface CustomButtonProps {
   readonly color?: string
 }
 
-export const CustomButton = styled.button<Props>`
+export const CustomButton = styled.button<CustomButtonProps>`
   text-decoration: none;
   text-transform: uppercase;
   padding: 1rem;

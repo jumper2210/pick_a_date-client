@@ -23,12 +23,12 @@ const Title = styled.h4`
   color: #ffff;
   text-transform: uppercase;
   font-family: 'Kalam', cursive;
-  font-size: 1.8rem;
+  font-size: 2.7rem;
   text-align: center;
 `
 const TitleWrapper = styled.div`
   width: 100%;
-  padding: 4rem 0;
+  padding: 3.5rem 0 5rem 0;
 `
 const ContentWrapper = styled.div`
   width: 90%;

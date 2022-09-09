@@ -5,8 +5,14 @@ import { Formik, Form, Field, FormikHelpers } from 'formik'
 import * as Yup from 'yup'
 import styled from 'styled-components'
 
-const StyledButton = styled(CustomButton)`
+const ButtonWrapper = styled.div`
+  display: flex;
+  justify-content: center;
   width: 100%;
+`
+
+const StyledButton = styled(CustomButton)`
+  width: 50%;
   margin: 1.2rem 0 2.5rem;
   border-radius: 0.6rem;
 `
@@ -91,12 +97,14 @@ export const EventFormSchema = () => {
             errors={errors.email}
             name='email'
           />
-          <StyledButton
-            color={submitBtn.color}
-            disabled={isSubmitting || submitBtn.color !== 'violet'}
-          >
-            {!isSubmitting && submitBtn.content}
-          </StyledButton>
+          <ButtonWrapper>
+            <StyledButton
+              color={submitBtn.color}
+              disabled={isSubmitting || submitBtn.color !== 'violet'}
+            >
+              {!isSubmitting && submitBtn.content}
+            </StyledButton>
+          </ButtonWrapper>
         </Form>
       )}
     </Formik>
