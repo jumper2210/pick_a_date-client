@@ -4,11 +4,17 @@ import { CustomInput } from '../../utils/custom/CustomInput'
 import { Formik, Form, Field, FormikHelpers } from 'formik'
 import * as Yup from 'yup'
 import styled from 'styled-components'
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs'
+import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider'
+import { DateTimePicker } from '@mui/x-date-pickers/DateTimePicker/DateTimePicker'
+import dayjs, { Dayjs } from 'dayjs'
+import TextField from '@mui/material/TextField'
 
 const ButtonWrapper = styled.div`
+  width: 100%;
   display: flex;
   justify-content: center;
-  width: 100%;
+  margin-top: 4rem;
 `
 
 const StyledButton = styled(CustomButton)`
@@ -44,69 +50,88 @@ export const EventFormSchema = () => {
     content: 'Send',
     color: 'violet',
   })
+  const [value, setValue] = useState<Dayjs | null>(dayjs())
 
   return (
-    <Formik
-      initialValues={initialValues}
-      validationSchema={EventSchema}
-      onSubmit={(
-        values,
-        { setSubmitting, resetForm }: FormikHelpers<FormValues>
-      ) => {
-        const sendEvent = async () => {}
-      }}
-    >
-      {({
-        values,
-        errors,
-        touched,
-        handleChange,
-        handleBlur,
-        handleSubmit,
-        isSubmitting,
-      }) => (
-        <Form onSubmit={handleSubmit}>
-          <Field type='hidden' name='form-name' />
-          <CustomInput
-            id='first-name'
-            label='Your first name'
-            onChangeFn={handleChange}
-            onBlurFn={handleBlur}
-            value={values.firstName}
-            touched={touched.firstName}
-            errors={errors.firstName}
-            name='first-name'
-          />
-          <CustomInput
-            id='last-name'
-            label='Your last name'
-            onChangeFn={handleChange}
-            onBlurFn={handleBlur}
-            value={values.lastName}
-            touched={touched.lastName}
-            errors={errors.lastName}
-            name='last-name'
-          />
-          <CustomInput
-            id='email'
-            label='Your email'
-            onChangeFn={handleChange}
-            onBlurFn={handleBlur}
-            value={values.email}
-            touched={touched.email}
-            errors={errors.email}
-            name='email'
-          />
-          <ButtonWrapper>
-            <StyledButton
-              color={submitBtn.color}
-              disabled={isSubmitting || submitBtn.color !== 'violet'}
-            >
-              {!isSubmitting && submitBtn.content}
-            </StyledButton>
-          </ButtonWrapper>
-        </Form>
-      )}
-    </Formik>
+    <LocalizationProvider dateAdapter={AdapterDayjs}>
+      <Formik
+        initialValues={initialValues}
+        validationSchema={EventSchema}
+        onSubmit={(
+          values,
+          { setSubmitting, resetForm }: FormikHelpers<FormValues>
+        ) => {
+          const sendEvent = async () => {}
+        }}
+      >
+        {({
+          values,
+          errors,
+          touched,
+          handleChange,
+          handleBlur,
+          handleSubmit,
+          isSubmitting,
+        }) => (
+          <Form onSubmit={handleSubmit}>
+            <Field type='hidden' name='form-name' />
+            <CustomInput
+              id='first-name'
+              label='Your first name'
+              onChangeFn={handleChange}
+              onBlurFn={handleBlur}
+              value={values.firstName}
+              touched={touched.firstName}
+              errors={errors.firstName}
+              name='first-name'
+            />
+            <CustomInput
+              id='last-name'
+              label='Your last name'
+              onChangeFn={handleChange}
+              onBlurFn={handleBlur}
+              value={values.lastName}
+              touched={touched.lastName}
+              errors={errors.lastName}
+              name='last-name'
+            />
+            <CustomInput
+              id='email'
+              label='Your email'
+              onChangeFn={handleChange}
+              onBlurFn={handleBlur}
+              value={values.email}
+              touched={touched.email}
+              errors={errors.email}
+              name='email'
+            />
+            <DateTimePicker
+              renderInput={(props) => (
+                <TextField
+                  sx={{
+                    background: '#ffff',
+                    borderRadius: '0.4rem',
+                    width: '40%',
+                  }}
+                  {...props}
+                />
+              )}
+              value={value}
+              onChange={(newValue) => {
+                setValue(newValue)
+              }}
+            />
+            <ButtonWrapper>
+              <StyledButton
+                color={submitBtn.color}
+                disabled={isSubmitting || submitBtn.color !== 'violet'}
+              >
+                {!isSubmitting && submitBtn.content}
+              </StyledButton>
+            </ButtonWrapper>
+          </Form>
+        )}
+      </Formik>
+    </LocalizationProvider>
   )
 }
