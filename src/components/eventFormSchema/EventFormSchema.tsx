@@ -109,7 +109,7 @@ export const EventFormSchema = () => {
           <Form onSubmit={handleSubmit}>
             <Field type='hidden' name='form-name' />
             <CustomInput
-              id='first-name'
+              id='firstName'
               label='Your first name'
               onChangeFn={handleChange}
               onBlurFn={handleBlur}
@@ -119,7 +119,7 @@ export const EventFormSchema = () => {
               name='first-name'
             />
             <CustomInput
-              id='last-name'
+              id='lastName'
               label='Your last name'
               onChangeFn={handleChange}
               onBlurFn={handleBlur}
