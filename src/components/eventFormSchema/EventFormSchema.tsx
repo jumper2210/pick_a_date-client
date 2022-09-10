@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import { CustomButton } from '../../utils/custom/CustomButton'
 import { CustomInput } from '../../utils/custom/CustomInput'
 import { Formik, Form, Field, FormikHelpers } from 'formik'
+import { useDispatch } from 'react-redux'
 import * as Yup from 'yup'
 import styled from 'styled-components'
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs'
@@ -9,6 +10,10 @@ import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider'
 import { DateTimePicker } from '@mui/x-date-pickers/DateTimePicker/DateTimePicker'
 import dayjs, { Dayjs } from 'dayjs'
 import TextField from '@mui/material/TextField'
+import { bindActionCreators } from 'redux'
+import { actionCreators } from '../../state'
+import axios from 'axios'
+import { apiUrl } from '../../utils/helpers/constants'
 
 const ButtonWrapper = styled.div`
   width: 100%;
@@ -51,6 +56,12 @@ export const EventFormSchema = () => {
     color: 'violet',
   })
   const [value, setValue] = useState<Dayjs | null>(dayjs())
+  const dispatch = useDispatch()
+
+  const clearButton = () => {
+    setSubmitBtn({ content: 'Send message', color: 'violet' })
+  }
+  const { createEvent } = bindActionCreators(actionCreators, dispatch)
 
   return (
     <LocalizationProvider dateAdapter={AdapterDayjs}>
@@ -61,7 +72,29 @@ export const EventFormSchema = () => {
           values,
           { setSubmitting, resetForm }: FormikHelpers<FormValues>
         ) => {
-          const sendEvent = async () => {}
+          const sendEvent = async () => {
+            createEvent(values)
+            try {
+              await axios({
+                url: apiUrl,
+                method: 'POST',
+                data: values,
+              })
+
+              setSubmitting(false)
+              setSubmitBtn({
+                content: 'All good! Data is properly stored in DB!',
+                color: 'bluViolet',
+              })
+              resetForm()
+              setTimeout(clearButton, 2500)
+            } catch (err) {
+              setSubmitting(false)
+              setSubmitBtn({ content: 'Something went wrong!', color: 'red' })
+              setTimeout(clearButton, 1500)
+            }
+          }
+          sendEvent()
         }}
       >
         {({
