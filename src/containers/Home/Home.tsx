@@ -11,12 +11,11 @@ const Wrapper = styled.section`
 `
 const InnerWrapper = styled.div`
   display: flex;
+  width: 95vw;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   border-radius: 2rem;
-  width: 93vw;
-  max-width: 70%;
   box-shadow: 0px -1px 26px 10px rgba(0, 0, 0, 0.51);
 `
 const Title = styled.h4`
@@ -31,7 +30,7 @@ const TitleWrapper = styled.div`
   padding: 3.5rem 0 5rem 0;
 `
 const ContentWrapper = styled.div`
-  width: 90%;
+  width: 100%;
   max-width: 50%;
 `
 

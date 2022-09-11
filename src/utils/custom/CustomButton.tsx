@@ -2,6 +2,7 @@ import styled, { css } from 'styled-components'
 
 interface CustomButtonProps {
   readonly color?: string
+  readonly disabled?: Boolean
 }
 
 export const CustomButton = styled.button<CustomButtonProps>`
@@ -18,5 +19,10 @@ export const CustomButton = styled.button<CustomButtonProps>`
     css`
       border-color: #5444e0;
       background: #5444e0;
+    `}
+  ${({ disabled }) =>
+    disabled === true &&
+    css`
+      cursor: not-allowed;
     `}
 `

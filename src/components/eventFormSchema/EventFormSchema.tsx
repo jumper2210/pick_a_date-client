@@ -12,8 +12,6 @@ import dayjs, { Dayjs } from 'dayjs'
 import TextField from '@mui/material/TextField'
 import { bindActionCreators } from 'redux'
 import { actionCreators } from '../../state'
-import axios from 'axios'
-import { apiUrl } from '../../utils/helpers/constants'
 
 const ButtonWrapper = styled.div`
   width: 100%;
@@ -73,17 +71,11 @@ export const EventFormSchema = () => {
           { setSubmitting, resetForm }: FormikHelpers<FormValues>
         ) => {
           const sendEvent = async () => {
-            createEvent(values)
             try {
-              await axios({
-                url: apiUrl,
-                method: 'POST',
-                data: values,
-              })
-
+              await createEvent(values)
               setSubmitting(false)
               setSubmitBtn({
-                content: 'All good! Data is properly stored in DB!',
+                content: 'All good!',
                 color: 'bluViolet',
               })
               resetForm()
@@ -141,12 +133,14 @@ export const EventFormSchema = () => {
             <DateTimePicker
               renderInput={(props) => (
                 <TextField
+                  {...props}
+                  error={touched.email && Boolean(errors.email)}
+                  helperText={touched.email && errors.email}
                   sx={{
                     background: '#ffff',
                     borderRadius: '0.4rem',
                     width: '40%',
                   }}
-                  {...props}
                 />
               )}
               value={value}
@@ -156,8 +150,11 @@ export const EventFormSchema = () => {
             />
             <ButtonWrapper>
               <StyledButton
+                type='submit'
                 color={submitBtn.color}
-                disabled={isSubmitting || submitBtn.color !== 'violet'}
+                disabled={
+                  isSubmitting || submitBtn.color !== 'violet' || !errors
+                }
               >
                 {!isSubmitting && submitBtn.content}
               </StyledButton>
