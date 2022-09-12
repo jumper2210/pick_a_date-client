@@ -150,6 +150,7 @@ export const EventFormSchema = () => {
             />
             <ButtonWrapper>
               <StyledButton
+                data-testid='submit-btn'
                 type='submit'
                 color={submitBtn.color}
                 disabled={
